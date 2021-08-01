@@ -8,12 +8,13 @@ using testowy.Models.User;
 
 namespace testowy.Repository
 {
-    public interface IUserService : CrudService<User>
-    {
-        UserResponse GetByLogin(string login); 
-    }
+    //public interface IUserService : CrudService<User>
+    //{
+    //    UserResponse GetByLogin(string login);
+    //    UserResponse GetByEmail(string email);
+    //}
 
-    public class UserManager : IUserService
+    public class UserManager : CrudService<User>
     {
         readonly MyDbContext _myDbContext;
 
@@ -50,6 +51,14 @@ namespace testowy.Repository
             if (userResponse == null)
                 return null;
             return new UserResponse(userResponse);  
+        }
+
+        public UserResponse GetByEmail(string email)
+        {
+            var userResponse = _myDbContext.Users.FirstOrDefault(e => e.Email == email);
+            if (userResponse == null)
+                return null;
+            return new UserResponse(userResponse);
         }
 
         public void Update(User dbEntity, User entity)

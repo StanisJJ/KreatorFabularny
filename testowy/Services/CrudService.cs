@@ -12,5 +12,6 @@ namespace testowy.Repository
         void Add(TEntity entity);
         void Update(TEntity dbEntity, TEntity entity);
         void Delete(TEntity entity);
+       
     }
 }

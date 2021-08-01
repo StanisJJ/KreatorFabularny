@@ -45,7 +45,8 @@ namespace testowy
 
             services.AddDbContext<MyDbContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:DbConnection"]));
             //services
-            services.AddScoped<IUserService, UserManager>();
+            services.AddScoped<UserManager>();
+            //services.AddScoped<IUserService, UserManager>();
             services.AddScoped<IAuthService, AuthService>();
 
             services.AddControllers();

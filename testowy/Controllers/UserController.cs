@@ -15,10 +15,16 @@ namespace testowy.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserService _dataRepository;
-        public UserController(IUserService dataRepository)
+       // private readonly IUserService _dataRepository;
+        private readonly UserManager _dataRepository;
+        //public UserController(IUserService dataRepository)
+        //{
+        //    _dataRepository = dataRepository;
+        //}
+
+        public UserController(UserManager userManager)
         {
-            _dataRepository = dataRepository;
+            _dataRepository = userManager;
         }
 
         [Authorize("Admin,User")]
@@ -43,7 +49,7 @@ namespace testowy.Controllers
             }
             return Ok(user);
         }
-       
+
         [HttpGet("Login/{name}")]
         public IActionResult FindByName(string name)
         {
@@ -54,6 +60,17 @@ namespace testowy.Controllers
             }
             return Ok(userResponse);
         }
+        [HttpGet("Email/{name}")]
+        public IActionResult FindByEmail(string name)
+        {
+            UserResponse userResponse = _dataRepository.GetByEmail(name);
+            if (userResponse == null)
+            {
+                return NotFound("The User record couldn't be found.");
+            }
+            return Ok(userResponse);
+        }
+
 
     }
 }
